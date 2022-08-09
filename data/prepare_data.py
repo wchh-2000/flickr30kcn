@@ -12,7 +12,7 @@ with open('../test_imgs.tsv', 'wt') as out_file:
     with jsonlines.open("../test_texts.jsonl",'w') as json:
         for id,line in enumerate(lines):
             if id %500 ==0:
-                print(i)
+                print(id)
             img_id, txt = line.split()            
             img_id =  img_id[:-6]
             Dict={"text_id":id,"text":txt,"image_ids":[img_id]}
@@ -29,6 +29,7 @@ with open('../test_imgs.tsv', 'wt') as out_file:
                 img.save(img_buffer, format=img.format)
                 byte_data = img_buffer.getvalue()
                 base64_str = base64.b64encode(byte_data) 
+                base64_str = base64_str.decode("utf-8") # str
                 tsv_writer.writerow([img_id,base64_str])
             
 # with open("train/flickr30k_cna_train.txt","r") as f:
