@@ -15,7 +15,7 @@ with open('../test_imgs.tsv', 'wt') as out_file:
                 print(id)
             img_id, txt = line.split()            
             img_id =  img_id[:-6]
-            Dict={"text_id":id,"text":txt,"image_ids":[img_id]}
+            Dict={"text_id":id,"text":txt,"image_ids":[int(img_id)]}
             json.write(Dict)
 
             if img_id in img_ids:#已经存储过
