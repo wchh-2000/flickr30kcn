@@ -83,12 +83,24 @@ def report_score(r1, r5, r10, out_p):
 
 
 def read_reference(path):
+    # 原始代码 因为没有test_texts.tr.jsonl 将test_texts.jsonl作为输入
+    # fin = open(path)
+    # reference = dict()
+    # for line in fin:
+    #     line = line.strip()
+    #     obj = json.loads(line)
+    #     reference[obj['image_id']] = obj['text_id']
+    # return reference
     fin = open(path)
     reference = dict()
     for line in fin:
         line = line.strip()
         obj = json.loads(line)
-        reference[obj['image_id']] = obj['text_ids']
+        img_id = obj['image_ids'][0]
+        if img_id in reference:
+            reference[img_id].append(obj['text_id'])
+        else:
+            reference[img_id] = [obj['text_id']]
     return reference
 
 def compute_score(golden_file, predict_file):
